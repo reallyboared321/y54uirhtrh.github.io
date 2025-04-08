@@ -256,11 +256,14 @@
             loadingScreen.style.display = 'flex';
             responseArea.style.display = 'none';
 
-fetch('/.netlify/functions/request', {
+const apiUrl = `${window.location.origin}/.netlify/functions/request`;
+
+fetch(apiUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content: link })
 })
+
 
 
             .then(response => {
