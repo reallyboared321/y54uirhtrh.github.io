@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emorea Game Downloader</title>
+    <title>WannabeLeaks Game Requester</title>
     <style>
         @font-face {
             font-family: 'sfregular';
@@ -16,81 +16,125 @@
         }
 
         body {
-            background: #0B0B0C;
+            background: linear-gradient(135deg, #0B0B0C 0%, #1A1A1E 100%);
             font-family: 'sfregular', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: white;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            align-items: center;
+            max-width: 1200px;
+            padding: 20px;
         }
 
         .container {
-            background: #0F0F10;
-            border: 2px solid #181819;
-            border-radius: 12px;
-            padding: 30px;
-            width: 90%;
-            max-width: 600px;
+            background: linear-gradient(145deg, #141416, #0F0F10);
+            border: 2px solid #2A2A2E;
+            border-radius: 15px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(105, 153, 252, 0.1) 0%, transparent 70%);
+            animation: glow 15s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.2; }
         }
 
         h1 {
             font-family: 'sflight';
-            font-size: 2.5rem;
-            background: linear-gradient(180deg, #AFAFAF 0%, #9B9B9B 100%);
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #6999FC, #AFAFAF);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 10px rgba(105, 153, 252, 0.5);
         }
 
         .input-box {
             width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            border: 2px solid #181819;
-            border-radius: 8px;
+            padding: 14px;
+            margin: 20px 0;
+            border: 2px solid #2A2A2E;
+            border-radius: 10px;
             background: #1D1D1E;
-            color: white;
-            font-size: 1rem;
+            color: #ffffff;
+            font-size: 1.1rem;
             font-family: 'sfregular';
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-box:focus {
+            border-color: #6999FC;
+            box-shadow: 0 0 10px rgba(105, 153, 252, 0.5);
+            outline: none;
         }
 
         .start-button {
-            background: linear-gradient(180deg, #6999FC 0%, #4983FB 100%);
-            border: 2px solid #FFFFFF1A;
-            border-radius: 8px;
-            padding: 12px 24px;
-            color: white;
-            font-size: 1.2rem;
+            background: linear-gradient(90deg, #6999FC 0%, #4983FB 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 30px;
+            color: #ffffff;
+            font-size: 1.3rem;
             font-family: 'sflight';
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(105, 153, 252, 0.4);
         }
 
         .start-button:hover {
-            transform: scale(1.1);
-            background: linear-gradient(180deg, #7AAFFF 0%, #5A94FF 100%);
-            box-shadow: 0px 0px 15px rgba(105, 153, 252, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(105, 153, 252, 0.6);
+        }
+
+        .start-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(105, 153, 252, 0.3);
         }
 
         .response-area {
-            margin-top: 20px;
+            margin-top: 25px;
             display: none;
-            background: #0F0F10;
-            border: 2px solid #181819;
-            border-radius: 8px;
+            background: #141416;
+            border: 2px solid #2A2A2E;
+            border-radius: 10px;
             padding: 15px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .response-area p {
-            background: linear-gradient(180deg, #5C5C5D 19.57%, #333334 97.83%);
+            background: linear-gradient(90deg, #AFAFAF 0%, #6999FC 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin: 0;
+            font-size: 1.1rem;
         }
 
         .loading-screen {
@@ -100,7 +144,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -108,10 +152,10 @@
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #6999FC;
-            border-top: 6px solid transparent;
+            width: 70px;
+            height: 70px;
+            border: 8px solid #6999FC;
+            border-top: 8px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -120,21 +164,43 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        .video-container {
+            max-width: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Game Copier</h1>
-        <input type="text" class="input-box" id="linkInput" placeholder="Paste your Roblox game link here" required>
-        <button class="start-button" onclick="startCopy()">Start</button>
-        <div class="response-area" id="responseArea">
-            <p id="responseText"></p>
+    <div class="wrapper">
+        <div class="container">
+            <h1>WannabeLeaks Game Requester</h1>
+            <input type="text" class="input-box" id="linkInput" placeholder="Paste your Roblox game link here" required>
+            <button class="start-button" onclick="startCopy()">Request</button>
+            <div class="response-area" id="responseArea">
+                <p id="responseText"></p>
+            </div>
+        </div>
+
+        <div class="video-container">
+            <video controls>
+                <source src="tutorial.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 
     <div class="loading-screen" id="loadingScreen">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; font-family: 'sflight';">Copying...</p>
+        <p style="margin-top: 25px; font-family: 'sflight'; font-size: 1.5rem;">Requesting...</p>
     </div>
 
     <script>
@@ -145,7 +211,7 @@
 
             if (sentLinks[link] && (now - sentLinks[link] < cooldown)) {
                 const timeLeft = Math.ceil((cooldown - (now - sentLinks[link])) / 1000 / 60);
-                return { allowed: false, message: `This link was sent recently. Try again in ${timeLeft} minute(s).` };
+                return { allowed: false, message: `This link was requested recently. Try again in ${timeLeft} minute(s).` };
             }
             return { allowed: true };
         }
@@ -178,49 +244,27 @@
             loadingScreen.style.display = 'flex';
             responseArea.style.display = 'none';
 
-            setTimeout(() => {
-                sendToWebhook(link);
-            }, 2000);
-        }
-
-        function sendToWebhook(link) {
-            // Replace with your webhook URL
-            const webhookURL = 'https://discord.com/api/webhooks/1358778512252604628/b2_f0lA3lVxA8glTgy71Q02NXAHKmsPBnyi1-nCI_PEf9DkzuIddMi8Cep_v6d7fUs-a';
-            const data = {
-                content: link // Discord expects 'content' for the message
-            };
-
-            fetch(webhookURL, {
+            fetch('https://discord.com/api/webhooks/1358778512252604628/b2_f0lA3lVxA8glTgy71Q02NXAHKmsPBnyi1-nCI_PEf9DkzuIddMi8Cep_v6d7fUs-a', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: link })
             })
             .then(response => {
-                const loadingScreen = document.getElementById('loadingScreen');
-                const responseArea = document.getElementById('responseArea');
-                const responseText = document.getElementById('responseText');
-
                 loadingScreen.style.display = 'none';
                 responseArea.style.display = 'block';
 
                 if (response.ok) {
-                    responseText.textContent = 'Sent successfully!';
-                    updateSentLinks(link); // Record the sent link with timestamp
+                    responseText.textContent = 'Requested successfully!';
+                    updateSentLinks(link);
                 } else {
-                    responseText.textContent = 'Failed to send. Error 903';
+                    responseText.textContent = 'Failed to request. Error 903';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                const loadingScreen = document.getElementById('loadingScreen');
-                const responseArea = document.getElementById('responseArea');
-                const responseText = document.getElementById('responseText');
-
                 loadingScreen.style.display = 'none';
                 responseArea.style.display = 'block';
-                responseText.textContent = 'An error occurred. See console for details.';
+                responseText.textContent = 'An error occurred. Check console for details.';
             });
         }
     </script>
