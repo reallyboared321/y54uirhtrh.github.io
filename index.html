@@ -263,27 +263,27 @@ fetch(apiUrl, {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content: link })
 })
+.then(response => {
+    loadingScreen.style.display = 'none';
+    responseArea.style.display = 'block';
 
+    if (response.ok) {
+        responseText.textContent = 'Requested successfully!';
+        updateSentLinks(link);
+    } else if (response.status === 429) {
+        // Handle Too Many Requests error
+        responseText.textContent = 'Too many requests! Please wait and try again.';
+    } else {
+        responseText.textContent = 'Failed to request. Error 903';
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    loadingScreen.style.display = 'none';
+    responseArea.style.display = 'block';
+    responseText.textContent = 'An error occurred. Check console for details.';
+});
 
-
-            .then(response => {
-                loadingScreen.style.display = 'none';
-                responseArea.style.display = 'block';
-
-                if (response.ok) {
-                    responseText.textContent = 'Requested successfully!';
-                    updateSentLinks(link);
-                } else {
-                    responseText.textContent = 'Failed to request. Error 903';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                loadingScreen.style.display = 'none';
-                responseArea.style.display = 'block';
-                responseText.textContent = 'An error occurred. Check console for details.';
-            });
-        }
     </script>
 </body>
 </html>
