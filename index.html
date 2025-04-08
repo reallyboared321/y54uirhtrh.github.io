@@ -257,10 +257,11 @@
             responseArea.style.display = 'none';
 
 fetch('/.netlify/functions/request', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ content: link })
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: link })
 })
+
 
             .then(response => {
                 loadingScreen.style.display = 'none';
