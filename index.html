@@ -256,11 +256,12 @@
             loadingScreen.style.display = 'flex';
             responseArea.style.display = 'none';
 
-            fetch('https://discord.com/api/webhooks/1358778512252604628/b2_f0lA3lVxA8glTgy71Q02NXAHKmsPBnyi1-nCI_PEf9DkzuIddMi8Cep_v6d7fUs-a', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: link })
-            })
+fetch('/.netlify/functions/request', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ content: link })
+})
+
             .then(response => {
                 loadingScreen.style.display = 'none';
                 responseArea.style.display = 'block';
