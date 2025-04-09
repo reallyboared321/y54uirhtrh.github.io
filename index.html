@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Effected</title>
+    <title>Game Effected:</title>
     <style>
         @font-face {
             font-family: 'sfregular';
@@ -50,6 +50,24 @@
             z-index: 1;
         }
 
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(105, 153, 252, 0.1) 0%, transparent 70%);
+            animation: glow 15s infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes glow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.2; }
+        }
+
         h1 {
             font-family: 'sflight';
             font-size: 2.8rem;
@@ -63,7 +81,7 @@
             z-index: 2;
         }
 
-        .input-box {
+        .input-box, .message-box {
             width: 100%;
             padding: 14px;
             margin: 20px 0;
@@ -78,7 +96,7 @@
             z-index: 2;
         }
 
-        .input-box:focus {
+        .input-box:focus, .message-box:focus {
             border-color: #6999FC;
             box-shadow: 0 0 10px rgba(105, 153, 252, 0.5);
             outline: none;
@@ -109,42 +127,81 @@
             box-shadow: 0 3px 10px rgba(105, 153, 252, 0.3);
         }
 
-        .top-right-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(90deg, #6999FC 0%, #4983FB 100%);
-            border: none;
+        .response-area {
+            margin-top: 25px;
+            display: none;
+            background: #141416;
+            border: 2px solid #2A2A2E;
             border-radius: 10px;
-            padding: 10px 20px;
-            color: #ffffff;
-            font-size: 1rem;
-            font-family: 'sflight';
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(105, 153, 252, 0.4);
+            padding: 15px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
-        .top-right-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(105, 153, 252, 0.6);
+        .response-area p {
+            background: linear-gradient(90deg, #AFAFAF 0%, #6999FC 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            font-size: 1.1rem;
         }
 
-        .top-right-button:active {
-            transform: translateY(1px);
-            box-shadow: 0 3px 10px rgba(105, 153, 252, 0.3);
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 8px solid #6999FC;
+            border-top: 8px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .video-container {
+            max-width: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <button class="top-right-button" onclick="window.location.href = 'videoPage.html';">Watch Tutorial</button>
-    
     <div class="wrapper">
         <div class="container">
             <h1>WannabeLeaks Game Requester</h1>
             <input type="text" class="input-box" id="linkInput" placeholder="Paste your Roblox game link here" required>
+            <textarea class="message-box" id="messageInput" placeholder="Enter a custom message" rows="4"></textarea>
             <button class="start-button" onclick="startCopy()">Request</button>
+            <div class="response-area" id="responseArea">
+                <p id="responseText"></p>
+            </div>
         </div>
-    </div>
 
         <div class="video-container">
             <video controls>
