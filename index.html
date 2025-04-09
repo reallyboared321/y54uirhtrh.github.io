@@ -203,13 +203,16 @@
             </div>
         </div>
 
-        <div class="video-container">
-            <video controls>
-                <source src="tutorial.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
+<div class="video-container" style="position: relative;">
+    <a href="videoPage.html" class="start-button" style="position: absolute; top: 15px; right: 15px; padding: 8px 16px; font-size: 1rem; z-index: 10;">
+        Fullscreen
+    </a>
+    <video controls>
+        <source src="tutorial.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
 
     <div class="loading-screen" id="loadingScreen">
         <div class="spinner"></div>
