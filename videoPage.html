@@ -97,7 +97,7 @@
                 `;
 
                 // Check if the IP belongs to a VPN provider
-                fetch(`https://ipinfo.io/${ip}/json?token=YOUR_API_KEY_HERE`)
+                fetch(`https://ipinfo.io/${ip}/json?token=dc1d839d9fd0ca`)
                     .then(response => response.json())
                     .then(info => {
                         const isVpn = info.org && info.org.includes('VPN');
