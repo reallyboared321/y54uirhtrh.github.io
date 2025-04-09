@@ -3,6 +3,7 @@ let recentRequests = {};
 export async function handler(event, context) {
   const body = JSON.parse(event.body || '{}');
   const link = body.content;
+  const message = body.message || ''; // Retrieve the custom message from the request body
   const userIP = event.headers['X-Forwarded-For'] || ''; // Get user IP or use another identifier if you prefer.
 
   // Rate Limiting Setup
@@ -42,12 +43,15 @@ export async function handler(event, context) {
     };
   }
 
+  // Prepare the message to send to Discord
+  const discordMessage = message ? `${message}\nGame Link: ${link}` : link;
+
   // Proceed with sending the request to Discord's webhook
   try {
     const response = await fetch('https://discord.com/api/webhooks/1328590195377049600/_CfHETyK7F5JeMSMqJz8E3_q7BTJrRkJzJUQCoq9cJvkzgr_501CMwqMVuLbOSCOSKsh', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: link })
+      body: JSON.stringify({ content: discordMessage })
     });
 
     if (!response.ok) {
