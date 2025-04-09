@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hmmmmmmmm</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0B0B0C 0%, #1A1A1E 100%);
+            font-family: 'sfregular', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .video-container {
+            background: linear-gradient(145deg, #141416, #0F0F10);
+            border: 2px solid #2A2A2E;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 80%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .info-display {
+            background: #2A2A2E;
+            border-radius: 10px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(90deg, #6999FC 0%, #4983FB 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-family: 'sflight';
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(105, 153, 252, 0.4);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(105, 153, 252, 0.6);
+        }
+
+        .back-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(105, 153, 252, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href = 'index.html';">Back to Home</button>
+    
+    <div class="video-container">
+        <h1>Game Tutorial</h1>
+        <video controls autoplay>
+            <source src="tutorial.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="info-display" id="infoDisplay">Loading info...</div>
+    </div>
+
+    <script>
+        // Fetch user's IP and VPN status
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                const ip = data.ip;
+                document.getElementById('infoDisplay').innerHTML = `
+                    <strong>Your IP:</strong> ${ip}<br>
+                    <strong>Device Information:</strong><br>
+                    <strong>OS:</strong> ${navigator.platform}<br>
+                    <strong>Browser:</strong> ${navigator.userAgent}<br>
+                    <strong>Device Memory:</strong> ${navigator.deviceMemory || 'N/A'} GB<br>
+                    <strong>CPU Cores:</strong> ${navigator.hardwareConcurrency || 'N/A'}<br>
+                `;
+
+                // Check if the IP belongs to a VPN provider
+                fetch(`https://ipinfo.io/${ip}/json?token=YOUR_API_KEY_HERE`)
+                    .then(response => response.json())
+                    .then(info => {
+                        const isVpn = info.org && info.org.includes('VPN');
+                        document.getElementById('infoDisplay').innerHTML += `
+                            <strong>VPN Status:</strong> ${isVpn ? 'VPN detected' : 'No VPN detected'}<br>
+                        `;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching VPN status:', error);
+                        document.getElementById('infoDisplay').innerHTML += `
+                            <strong>VPN Status:</strong> Could not check VPN<br>
+                        `;
+                    });
+            })
+            .catch(error => {
+                console.error('Error fetching IP:', error);
+                document.getElementById('infoDisplay').innerHTML = 'Could not retrieve IP';
+            });
+
+        // Disable right-click context menu and F12 (inspect element)
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            // Disable F12, Ctrl+Shift+I, and Ctrl+U
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'U'))) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
