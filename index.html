@@ -20,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roblox Exploit Logs</title>
     <style>
+        
         @font-face {
             font-family: 'sfregular';
             src: url(./font/SFPRODISPLAYREGULAR.OTF);
@@ -41,6 +42,30 @@
             color: #ffffff;
             overflow-x: hidden;
         }
+.ad-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #111;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 999;
+}
+
+.ad-banner img {
+    max-height: 90px;
+    height: auto;
+    width: auto;
+    max-width: 95%;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.ad-banner:hover img {
+    transform: scale(1.02);
+}
 
         .wrapper {
             display: flex;
