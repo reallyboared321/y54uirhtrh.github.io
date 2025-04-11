@@ -33,14 +33,10 @@
             border-radius: 10px;
         }
 
-        .info-display {
-            background: #2A2A2E;
-            border-radius: 10px;
-            padding: 10px;
+        h1 {
             color: #ffffff;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            text-align: left;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
         .back-button {
@@ -78,56 +74,6 @@
             <source src="IMG_4051.MP4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="info-display" id="infoDisplay">Loading info...</div>
     </div>
-
-    <script>
-        // Fetch user's IP and VPN status
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                const ip = data.ip;
-                document.getElementById('infoDisplay').innerHTML = `
-                    <strong>Your IP:</strong> ${ip}<br>
-                    <strong>Device Information:</strong><br>
-                    <strong>OS:</strong> ${navigator.platform}<br>
-                    <strong>Browser:</strong> ${navigator.userAgent}<br>
-                    <strong>Device Memory:</strong> ${navigator.deviceMemory || 'N/A'} GB<br>
-                    <strong>CPU Cores:</strong> ${navigator.hardwareConcurrency || 'N/A'}<br>
-                `;
-
-                // Check if the IP belongs to a VPN provider
-                fetch(`https://ipinfo.io/${ip}/json?token=dc1d839d9fd0ca`)
-                    .then(response => response.json())
-                    .then(info => {
-                        const isVpn = info.org && info.org.includes('VPN');
-                        document.getElementById('infoDisplay').innerHTML += `
-                            <strong>VPN Status:</strong> ${isVpn ? 'VPN detected' : 'No VPN detected'}<br>
-                        `;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching VPN status:', error);
-                        document.getElementById('infoDisplay').innerHTML += `
-                            <strong>VPN Status:</strong> Could not check VPN<br>
-                        `;
-                    });
-            })
-            .catch(error => {
-                console.error('Error fetching IP:', error);
-                document.getElementById('infoDisplay').innerHTML = 'Could not retrieve IP';
-            });
-
-        // Disable right-click context menu and F12 (inspect element)
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener('keydown', function (e) {
-            // Disable F12, Ctrl+Shift+I, and Ctrl+U
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'U'))) {
-                e.preventDefault();
-            }
-        });
-    </script>
 </body>
 </html>
